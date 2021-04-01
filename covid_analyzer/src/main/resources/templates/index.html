@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>LabProj L32</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>List of Countries</h1>
+    <table>
+        <tr th:each="country: ${country_list}">
+            <td th:text="${country.country}"></td>
+            
+        </tr>
+    </table>
+</body>
+</html>
