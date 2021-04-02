@@ -15,19 +15,20 @@ public class Country{
     public Country(){
 
     }
-
+    @JsonProperty("Country")
     public String getCountry(){
         return country;
     }
     @JsonProperty("ISO2")
-    public String getISO2(){
+    public String getIso2(){
         return iso2;
     }
     @JsonProperty("Country")
     public void setCountry(String country){
         this.country = country;
     }
-    public void setISO2(String ISO2){
+    @JsonProperty("ISO2")
+    public void setIso2(String ISO2){
         this.iso2 = ISO2;
     }
 

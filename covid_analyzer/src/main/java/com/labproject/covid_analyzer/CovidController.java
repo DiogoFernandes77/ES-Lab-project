@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,40 +36,56 @@ public class CovidController {
 		return "Greetings from Spring Boot!";
 	}
 
-    @GetMapping("/index")
+
+	@GetMapping("/index")
 	public String index(Model model) throws JsonProcessingException{
-		
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "https://api.covid19api.com/countries";
-		String json = restTemplate.getForObject(url, String.class);
-		//String json = "[{\"Country\":\"mkyong\", \"ISO2\":\"ola\"}, {\"Country\":\"fong\", \"ISO2\":\"38\"}]";
-		ObjectMapper objectMapper = new ObjectMapper();
-		
-		// HashMap<String, Country> country_map = new HashMap<String, Country>();
 		try{
+			String json = restTemplate.getForObject(url, String.class);
+			
+			ObjectMapper objectMapper = new ObjectMapper();
 
 			Country[] country_list = objectMapper.readValue(json, Country[].class);
 					
 					
-					log.info("Country Values");
-					for(Country cnt : country_list){
-						System.out.print(cnt);
-					}
+			// log.info("Country Values");
+			// for(Country cnt : country_list){
+			// 	log.info(cnt.toString());
+			// }
 			model.addAttribute("country_list", country_list);
 
 		}catch(Exception e){
-			log.info("ERRO");
+			log.info("ERRO ->" + e.toString());
 		}
-		
-		
+
+		return "index";
+	}
+
+
+	@GetMapping("/tables")
+	public String tables(@RequestParam(name="selDate", required = false) String date) throws JsonProcessingException{
+		//not working
+		log.info(date);
 		
 
-        
-		
-		return "index";
-		
-		
-		
+		return "tables";
 	}
+ 
+	
+	
+	@GetMapping("/news")
+	public String news(Model model) throws JsonProcessingException{
+		
+
+		return "news";
+	}
+
+
+
+
+
+
+
 
 }
