@@ -13,7 +13,7 @@
 
     <!-- Custom fonts for this template-->
     <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
-    <link th;href="@{https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i}"
+    <link th:href="@{https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i}"
           rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -106,17 +106,24 @@
 
                 <!-- Topbar Search -->
                 <div class="d-none d-sm-inline-block mr-auto col-sm-5 navbar-search">
-                    <form method="post" action="{% url 'index' %}">
+                    <form method="post" action= "/index">
                         
-                        <select class="mdb-select md-form form-control bg-light border-0 small" id = "sel" name = "countrySelect"  onchange="submit()" searchable="Search here.." >
-                            <option value="0" disabled selected>select country</option>
-                            <option th:each="country : ${country_list}" th:value="${country.iso2}" th:text="${country.country}"></option>  
+                        <select  class="mdb-select md-form form-control bg-light border-0 small" id = "sel" name = "selCountry"  onchange="submit()" searchable="Search here.." >
+                            <option value="" disabled selected>select country</option>
+                            <option  th:each="country : ${country_list}" th:value="${country.iso2}" th:text="${country.country}"></option>  
                         </select>
+                        
                         <input id ="submitIn" type="hidden" name="myinput" value="0" />
+                    
                     </form>
+               
+               
+               
+               
                 </div>
 
-                <script>
+               
+               <script>
                     function submit(){ // trigger action
                         document.getElementById("submitIn").value = "1";
                     }
@@ -180,7 +187,7 @@
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total
                                             cases
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_cases}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${total_cases}"></div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -196,10 +203,10 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Deaths</div>
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1" th:text="${deaths}"></div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ total_deaths }}</div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
                                             </div>
                                             <div class="col">
 
@@ -221,10 +228,10 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Recovery
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1" th:text="${recovery}">Recovery
                                             cases
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">No data available</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-syringe fa-2x text-gray-300"></i>
@@ -243,7 +250,7 @@
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total
                                             Active Cases
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">No data available</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-exclamation fa-2x text-gray-300"></i>
