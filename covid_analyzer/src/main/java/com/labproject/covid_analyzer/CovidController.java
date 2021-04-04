@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -57,7 +58,7 @@ public class CovidController {
 					
 					
 			// log.info("Country Values");
-			// for(Country cnt : country_list){
+			// for(Country cnt : country_list)
 			// 	log.info(cnt.toString());
 			// }
 			
@@ -65,17 +66,19 @@ public class CovidController {
 
 			//Invenções para tentar meter o global a funfar
 
-			// String json2 = restTemplate.getForObject(url2, String.class);
+			String json2 = restTemplate.getForObject(url2, String.class);
 			// log.info(json2);
-
-
-			// Summary global = new ObjectMapper().readValue(json2, Summary.class) ;
+			
+			// log.info(Integer.toString(confirmed));
+			 Summary summary = new ObjectMapper().readValue(json2, Summary.class) ;
 			
 			// log.info(global.toString());
 
-			// confirmed = Integer.parseInt(global.getConfirmed());
-			// deaths = Integer.parseInt(global.getDeaths());
-			// recovered = Integer.parseInt(global.getRecovered());
+			confirmed = Integer.parseInt(summary.getGlobal().getConfirmed());
+			deaths = Integer.parseInt(summary.getGlobal().getDeaths());
+			recovered = Integer.parseInt(summary.getGlobal().getRecovered());
+
+			log.info(Integer.toString(confirmed));
 			
 		}catch(Exception e){
 			log.info("ERRO ->" + e.toString());
@@ -83,10 +86,10 @@ public class CovidController {
 
 		//Invenções para tentar meter o global a funfar
 
-		// model.addAttribute("total_cases", confirmed);
-        // model.addAttribute("deaths", deaths);
-		// model.addAttribute("recovery", recovered);
-		// model.addAttribute("active", active);
+		model.addAttribute("total_cases", confirmed);
+        model.addAttribute("deaths", deaths);
+		model.addAttribute("recovery", recovered);
+		//model.addAttribute("active", active);
 
 		return "index";
 	}

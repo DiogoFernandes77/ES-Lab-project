@@ -1,24 +1,21 @@
 package com.labproject.covid_analyzer;
 
-import java.util.Dictionary;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Summary {
-    private Dictionary<String,Integer> global;
+public class Global {
     private String confirmed;
     private String deaths;
     private String recovered;
     private String newConfirmed;
     private String newDeaths;
     private String newRecovered;
-    private String active;
     private String date;
 
-    public Summary(){}
+    public Global(){}
     // @JsonProperty("Country")
     // public String getCountry(){
     //     return country;
@@ -29,16 +26,15 @@ public class Summary {
     //     this.country = country;
     // }
 
+    // @JsonProperty("Global")
+    // public Dictionary<String,Integer> getGlobal(){
+    //     return global;
+    // }
 
-    @JsonProperty("Global")
-    public Dictionary<String,Integer> getGlobal(){
-        return global;
-    }
-
-    @JsonProperty("Global")
-    public void setCountry(Dictionary<String,Integer> global){
-        this.global = global;
-    }
+    // @JsonProperty("Global")
+    // public void setCountry(Dictionary<String,Integer> global){
+    //     this.global = global;
+    // }
 
 
     @JsonProperty("TotalConfirmed")
