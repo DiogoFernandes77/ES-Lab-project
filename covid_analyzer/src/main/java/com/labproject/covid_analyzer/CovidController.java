@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,11 @@ public class CovidController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		String url = "https://api.covid19api.com/countries";
+		String url2 = "https://api.covid19api.com/summary";
+		int confirmed=0;
+		int deaths=0;
+		int recovered=0;
+		int active = 0;
 		try{
 			String json = restTemplate.getForObject(url, String.class);
 			
@@ -56,10 +62,31 @@ public class CovidController {
 			// }
 			
 			model.addAttribute("country_list", country_list);
+
+			//Invenções para tentar meter o global a funfar
+
+			// String json2 = restTemplate.getForObject(url2, String.class);
+			// log.info(json2);
+
+
+			// Summary global = new ObjectMapper().readValue(json2, Summary.class) ;
+			
+			// log.info(global.toString());
+
+			// confirmed = Integer.parseInt(global.getConfirmed());
+			// deaths = Integer.parseInt(global.getDeaths());
+			// recovered = Integer.parseInt(global.getRecovered());
 			
 		}catch(Exception e){
 			log.info("ERRO ->" + e.toString());
 		}
+
+		//Invenções para tentar meter o global a funfar
+
+		// model.addAttribute("total_cases", confirmed);
+        // model.addAttribute("deaths", deaths);
+		// model.addAttribute("recovery", recovered);
+		// model.addAttribute("active", active);
 
 		return "index";
 	}
@@ -69,11 +96,36 @@ public class CovidController {
     public String showPage(@RequestParam("selCountry") String country,RedirectAttributes redirectAttributes) {
 
         log.info(country);
+		int confirmed=0;
+		int deaths=0;
+		int recovered=0;
+		int active = 0;
 		//basicamente é ir buscar agr os stats para o pais em questao
-		int total = 10;
-		redirectAttributes.addFlashAttribute("total_cases", total);
-        //redirectAttributes.addFlashAttribute("deaths", total);
-		//redirectAttributes.addFlashAttribute("recovery", total);
+		RestTemplate restTemplate = new RestTemplate();
+		String url = "https://api.covid19api.com/total/country/" + country;
+
+		try{
+			String json = restTemplate.getForObject(url, String.class);
+			//log.info(json);
+			//log.info("2");
+			CountryEntry[] list = new ObjectMapper().readValue(json, CountryEntry[].class) ;
+			//log.info("1");
+			log.info(list[list.length-1].toString());
+			confirmed = Integer.parseInt(list[list.length-1].getConfirmed());
+			deaths = Integer.parseInt(list[list.length-1].getDeaths());
+			recovered = Integer.parseInt(list[list.length-1].getRecovered());
+			active = Integer.parseInt(list[list.length-1].getActive());
+
+		}catch(Exception e){
+			log.info("ERRO ->" + e.toString());
+		}
+
+		//int total = 10;
+		redirectAttributes.addFlashAttribute("total_cases", confirmed);
+        redirectAttributes.addFlashAttribute("deaths", deaths);
+		redirectAttributes.addFlashAttribute("recovery", recovered);
+		redirectAttributes.addFlashAttribute("active", active);
+
 		return "redirect:/index";
     }    
 	
