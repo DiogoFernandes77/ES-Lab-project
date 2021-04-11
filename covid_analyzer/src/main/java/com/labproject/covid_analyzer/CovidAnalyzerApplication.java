@@ -10,11 +10,6 @@ public class CovidAnalyzerApplication {
 		SpringApplication.run(CovidAnalyzerApplication.class, args);
 	
 	
-	
-	
-	
-	
-	
 	}
 
 }
