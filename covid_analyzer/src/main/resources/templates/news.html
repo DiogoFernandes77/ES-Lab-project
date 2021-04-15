@@ -146,8 +146,123 @@
 
                 <!-- Page Heading -->
                 <h1 class="h3 mb-2 text-gray-800">News Covid</h1>
-                <p class="mb-4">Por implementar...</p>
+                <div class="col-xl-3 col-md-6 mb-4">
+                   
 
+
+                </div>
+                <!-- <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <form method="post" action= "/world">
+                                        <button type="submit"></button>
+                                    
+                                    </form>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${total_cases}"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                
+                
+               
+                 <!-- Total cases -->
+                 <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total
+                                        cases
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${total_cases}"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <!-- <div class="text-xs font-weight-bold text-info text-uppercase mb-1" th:text="${deaths}"></div> -->
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Deaths
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${deaths}"></div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+
+                                    <i class="fas fa-skull fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <!-- <div class="text-xs font-weight-bold text-success text-uppercase mb-1" th:text="${recovery}">Recovery
+                                        cases
+                                    </div> -->
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Recovered
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${recovery}"></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-syringe fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Requests Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <!-- <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" th:text="${active}">Total
+                                        Active Cases
+                                    </div> -->
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Active Cases
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${active}"></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-exclamation fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
                 <!-- Bootstrap core JavaScript-->
                 <script src="/static/vendor/jquery/jquery.min.js"></script>

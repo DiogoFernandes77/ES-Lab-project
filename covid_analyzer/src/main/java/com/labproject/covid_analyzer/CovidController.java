@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
+import java.util.Random;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -33,11 +35,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import org.springframework.scheduling.annotation.Scheduled;
 @Controller
 public class CovidController {
 
+	@Autowired
+	private WorldRepository worldRepository;
 	private static final Logger log = LoggerFactory.getLogger(CovidController.class); // A logger, to send output to the log
+	private Random gen = new Random();
 	
 	
 	@RequestMapping("/")
@@ -188,7 +193,7 @@ public class CovidController {
 			// log.info(json2);
 			
 			// log.info(Integer.toString(confirmed));
-			 Summary summary = new ObjectMapper().readValue(json2, Summary.class) ;
+			Summary summary = new ObjectMapper().readValue(json2, Summary.class) ;
 			
 			// log.info(global.toString());
 
@@ -229,10 +234,72 @@ public class CovidController {
         return "tables";
     }    
 	
+	@PostMapping("/world")
+    public String getWorld() {
+		
+		
+		
+		
+		return "news";
+	}    
+	@Scheduled(fixedRate = 60000) // 1min
+	public void test(){
+		World wrl = new World();
+		LocalDateTime dateTime = LocalDateTime.now(); // Gets the current date and time
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String data = dateTime.format(formatter);
+        log.info(data);
+		
+		int confirmed=0;
+		int deaths=0;
+		int recovered=0;
+		
+		
+		RestTemplate restTemplate = new RestTemplate();
+		String url = "https://api.covid19api.com/summary";
+		try{
+			String json = restTemplate.getForObject(url, String.class);
+
+			// log.info(Integer.toString(confirmed));
+			Summary summary = new ObjectMapper().readValue(json, Summary.class) ;
+			
+			// log.info(global.toString());
+
+			confirmed = Integer.parseInt(summary.getGlobal().getConfirmed());
+			deaths = Integer.parseInt(summary.getGlobal().getDeaths());
+			recovered = Integer.parseInt(summary.getGlobal().getRecovered());
+
+			log.info(Integer.toString(confirmed));
+			
+		}catch(Exception e){
+			log.info("ERRO ->" + e.toString());
+		}
+		
+		
+		wrl.setDate(data);
+		wrl.setConfirmed(confirmed);
+		wrl.setDeaths(deaths);
+		wrl.setRecovered(recovered);
+		
+		worldRepository.save(wrl);
+
+
+
+
+
+
+
+	}
+
+	
+	
+	
 	@GetMapping("/news")
 	public String news(Model model) throws JsonProcessingException{
 		
-
+		
+		
+		
 		return "news";
 	}
 
