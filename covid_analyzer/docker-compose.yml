@@ -1,0 +1,47 @@
+version: '3.7'
+
+# Define services
+services:
+  # App backend service
+  myapp-main:
+    image: covid_analyzer
+    restart: on-failure
+    depends_on:
+      - escov_mysql
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=joao
+      - DATABASE_PASSWORD=joao
+      - DATABASE_NAME=escovid
+      - DATABASE_PORT=3306
+
+  # Frontend Service 
+#  app-client:
+ #   build:
+  #    context: springio/covid_analyzer # Use an image built from the specified dockerfile in the `polling-app-client` directory.
+  #    dockerfile: Dockerfile
+   #   args:
+    #    REACT_APP_API_BASE_URL: http://127.0.0.1:8080/api
+   # ports:
+    #  - "9090:80" # Map the exposed port 80 on the container to port 9090 on the host machine
+    #restart: always
+    #depends_on:
+    #  - app-server
+    #networks:
+    #  - frontend  
+
+  # Database Service (Mysql)
+  escov_mysql:
+    image: mysql:8.0.23
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: escovid
+      MYSQL_USER: joao
+      MYSQL_PASSWORD: joao
+      MYSQL_ROOT_PASSWORD: root
+  
+
