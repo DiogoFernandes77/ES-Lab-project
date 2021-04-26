@@ -166,13 +166,33 @@
                 <!-- DataTales  -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Cases worldwide: {{ sel_date }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Cases worldwide:</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            
+                            <table style="width:100%">
+                                <tr>
+                                        <th >Date</th>
+                                        <th >Confirmed cases</th>
+                                        <th >Deaths</th>
+                                        <th >Recovered</th>
+                                 </tr>
+                                <th:block th:each="entrie : ${entries_list}">
+                                    
 
-                            {% block content %}
-                            {% endblock %}
+                                    <tr>
+                                        <td th:text="${entrie.date}"></td>
+                                        <td th:text="${entrie.confirmed}"></td>
+                                        <td th:text="${entrie.deaths}"></td>
+                                        <td th:text="${entrie.recovered}"></td>
+                                    </tr>
+                                </th:block>
+                            </table>
+                                
+                            
+
+                           
 
                         </div>
                     </div>

@@ -220,19 +220,7 @@ public class CovidController {
 
 	
 	
-	@GetMapping("/tables")
-	public String tables(Model model) throws JsonProcessingException{
-		
-		
-
-		return "tables";
-	}
-	@PostMapping("/tables")
-    public String getData(@RequestParam("selDate") String dat) {
-
-        System.out.println("Date planted: " + dat); //in reality, you'd use a logger instead :)
-        return "tables";
-    }    
+	
 	
 	@PostMapping("/world")
     public String getWorld() {
@@ -242,6 +230,9 @@ public class CovidController {
 		
 		return "news";
 	}    
+	
+	
+	
 	@Scheduled(fixedRate = 60000) // 1min
 	public void test(){
 		World wrl = new World();
@@ -296,14 +287,54 @@ public class CovidController {
 	
 	@GetMapping("/news")
 	public String news(Model model) throws JsonProcessingException{
+		int confirmed=0;
+		int deaths=0;
+		int recovered=0;
+		RestTemplate restTemplate = new RestTemplate();
+		String url = "https://api.covid19api.com/summary";
+		try{
+			String json = restTemplate.getForObject(url, String.class);
+
+			// log.info(Integer.toString(confirmed));
+			Summary summary = new ObjectMapper().readValue(json, Summary.class) ;
+			
+			// log.info(global.toString());
+
+			confirmed = Integer.parseInt(summary.getGlobal().getConfirmed());
+			deaths = Integer.parseInt(summary.getGlobal().getDeaths());
+			recovered = Integer.parseInt(summary.getGlobal().getRecovered());
+
+			log.info(Integer.toString(confirmed));
+			
+		}catch(Exception e){
+			log.info("ERRO ->" + e.toString());
+		}
 		
+		model.addAttribute("total_cases", confirmed);
+        model.addAttribute("deaths", deaths);
+		model.addAttribute("recovery", recovered);
 		
 		
 		
 		return "news";
 	}
 
+	@GetMapping("/tables")
+	public String tables(Model model) throws JsonProcessingException{
+		
+		List<World> list = new ArrayList<>();
+		worldRepository.findAll().forEach(list::add);
+		model.addAttribute("entries_list", list);
+		
 
+		return "tables";
+	}
+	@PostMapping("/tables")
+    public String getData(@RequestParam("selDate") String dat) {
+
+        //System.out.println("Date planted: " + dat); //in reality, you'd use a logger instead :)
+        return "tables";
+    }    
 
 
 
